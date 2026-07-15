@@ -157,10 +157,66 @@ Build these first; reuse rather than re-style.
 | `.ui-badge` / `.ui-badge-{neutral,success,warning,danger,accent}` | Inline status label, `0.7rem` weight 800, `white-space: nowrap`. |
 | `.ui-compact-label` | Quieter than a badge; same status variants. |
 | `.ui-control`, `.ui-select`, `.ui-textarea` | Form inputs, `min-height 2.35rem`, gold focus border. |
+| `.ui-icon-button` | Square, quiet icon-only control (gear, help, close). Transparent bg, subtle border, `--radius-rect`; hover raises to `--surface-hover`. Used for the settings gear and drawer close. |
+| `.ui-image-cell` | Click-to-pick / drag-to-drop image slot with a corner clear button (see §4.2). |
+
+Enabled vs disabled button state and the two interaction patterns below (image cell,
+settings gear + drawer) are brand-level and apply to **both** the web dashboard and the
+PyQt desktop apps. Names above are the web classes; the PyQt apps mirror them in
+`app/ui/styles.py` with the same tokens.
 
 Class families in `globals.css`: surfaces (`ui-panel`, `ui-data-row`, `ui-empty-state`, `ui-code-block`),
 buttons/controls, labels/type, tables (`ui-advanced-table-*`), progressive disclosure/layout
 (`ui-collapsible-card-*`, `ui-page-tabs`, `ui-drawer-*`).
+
+### 4.1 Button states (enabled vs disabled)
+
+A disabled button must read as *obviously not clickable* — tonal and recessed — and turn
+solid only when its precondition is met. Do not gray a primary button by lowering opacity
+alone; opacity-only looks like a rendering glitch.
+
+| State | Surface | Text | Border | Cursor | Shadow |
+| --- | --- | --- | --- | --- | --- |
+| **Primary, enabled** | filled accent (`--color-gold` for "unlock/confirm" gates, `--color-oxblood` for submit/generate) | `--color-bone` | none / matching | pointer | `--shadow-button` |
+| **Primary, disabled** | `--surface-soft` | `--text-muted` | `1px --line-subtle` | `not-allowed` | none |
+| **Secondary, enabled** | transparent | `--text-main` | `1px --line-strong` | pointer | none |
+
+Rules:
+- Transition between states with `--motion-fast`; the fill "arrives" when the gate clears.
+- Gate the **input and the button together** (e.g. a Batch ID field stays disabled until every
+  row qualifies, then both the field and its button light up), so the tonal→solid change is the
+  single signal that the action is available.
+- Keep the disabled label fully legible (muted, not faint); the user must still read what it will do.
+
+### 4.2 Image cell — pick, drop, clear
+
+Standard slot for choosing a per-row asset (logos, artwork, barcodes) in tables/forms. No
+overflow menu — the cell itself is the target.
+
+- **Empty:** show a large muted `+` centered in the cell; the whole cell is clickable and opens
+  the file picker (default its start folder to that field's asset folder). Cursor is pointer.
+- **Drag & drop:** dropping a file anywhere on the cell sets it. While a drag hovers, show a
+  **dashed `--color-gold` border** over a faint gold wash (`rgba(199,154,53,.12)`).
+- **Filled:** render the asset on a **white/`--color-paper` backing** with a small radius so dark
+  or black artwork stays visible against the dark surface. A small **`✕`** clear button sits in the
+  top-right corner (danger tint on hover) and is the only affordance needed to remove/replace.
+- **Non-previewable file** (e.g. PostScript-only `.ai` with no embedded PDF): show the file name +
+  extension badge instead of a thumbnail; still clickable and clearable. Preview PDF-compatible
+  `.ai`/`.pdf`, rasters, and SVG.
+- Hover on the cell raises a `--color-gold` border + `--surface-hover`. Never rely on the `+`/`✕`
+  glyph alone — the tooltip states "Click to choose an image, or drop one here".
+
+### 4.3 Settings: gear + drawer
+
+- Entry point is a quiet **gear icon button** (`.ui-icon-button`, lucide `settings` / `⚙`) placed
+  top-right of the header, beside Help — it must **not** push down or reflow the title row.
+- Clicking it opens an `AnimatedDrawer` (right side, shared persisted width, `--motion-drawer`,
+  `--shadow-drawer`, dimmed backdrop that closes on click/Esc).
+- Group settings into labeled sections: **General** (cross-feature), feature-specific groups, and
+  **Troubleshooting** (diagnostics / "disable warning"-type escape hatches) last.
+- A single control owns each behavior (checkbox + its dependent inputs indented beneath it, e.g.
+  a "Recolor" toggle followed by its color swatch and a quiet reset link) — no duplicate toggles on
+  the page and in the drawer.
 
 ---
 

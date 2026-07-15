@@ -21,6 +21,7 @@ Clone this repo as a **sibling** next to each app under `~/GitHub/`:
 | --- | --- |
 | [`Image_Naming_2`](../Image_Naming_2/) | Inlined tokens in `src/globals.css`; docs point here |
 | [`header_card_project`](../header_card_project/) | PyQt stylesheet follows same palette; see its `app/ui/styles.py` |
+| [`illustrator-import-to-template`](../illustrator-import-to-template/) | PyQt app; mirrors tokens in `app/ui/styles.py`. Reference implementation of the §4.1 disabled-button, §4.2 image cell, and §4.3 settings gear/drawer patterns |
 | [`dashboardworld`](../dashboardworld/) | Canonical token source |
 
 See [`REPO_LAYOUT.md`](REPO_LAYOUT.md) for the full `~/GitHub/` folder map.

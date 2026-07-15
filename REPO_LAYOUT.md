@@ -10,6 +10,7 @@ C:\Users\alaba\GitHub\
 ├── brand_guidelines_for_apps\   ← this repo
 ├── Image_Naming_2\              ← FootClothes Image Namer (Vite + React)
 ├── header_card_project\         ← Header Card Generator (Python + PyQt)
+├── illustrator-import-to-template\ ← Import-to-template app (Python + PyQt)
 ├── fc-illustrator-scripts\      ← Illustrator JSX (header card batch runner)
 ├── dashboardworld\              ← token source of truth (Next.js BFF)
 └── …
