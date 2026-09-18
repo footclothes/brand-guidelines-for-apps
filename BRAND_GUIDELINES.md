@@ -70,6 +70,50 @@ Accent tones extend color choice without new status names: `accent` (default pin
 
 Rule: never rely on color alone for status. Pair with text, icon, or shape.
 
+### 1.4 Creative-tool variant: photography and design workspaces
+
+Internal/backend dashboards use the Dashboard World treatment above. Photography and design tools
+use this documented variant instead of creating a separate brand repository. The reference
+implementation is `fc-sock-imaginifier`: restrained editorial type, quiet utility controls, and a
+dedicated workspace for reviewing visual assets.
+
+- Use the Imaginifier's light editorial treatment, not the dashboard's dark/gold/Oswald shell:
+  Georgia headings and wordmark, Segoe UI body/controls, paper/ink shell colors and restrained olive
+  control accents. Retain compact rectangular controls, keyboard focus and semantic status behavior.
+- Separate the image stage from the surrounding operational shell. The stage, image cards,
+  checkerboard, and preview backing use neutral achromatic gray/black/white only. White is the
+  preferred backing for a preview that must show dark artwork.
+- Never apply a brand-tinted surface, gradient, grid overlay, color overlay, CSS filter, blend
+  mode, or opacity treatment over/behind a photograph where it alters perceived image color.
+  Neutral checkerboards may indicate transparency but must be confined to the actual image bounds.
+- Keep accent color outside the image-viewing area: use it for selection borders, controls, focus,
+  and status adjacent to the stage, not as an image surround or preview canvas.
+- Export rendering is independent of UI presentation. UI styling must never affect source pixels,
+  transparency, crop, or exported colors.
+
+Use named, theme-aware creative-stage tokens in consuming applications rather than hard-coded
+values; keep their values achromatic in both themes.
+
+Recommended creative-tool tokens (light by default):
+
+| Token | Value | Role |
+| --- | --- | --- |
+| `--surface` | `#f2f0e9` | Paper shell, outside photograph viewing areas |
+| `--surface-raised` | `#f9f8f3` | Sidebar and control panels |
+| `--surface-soft` | `#ecece4` | Quiet controls |
+| `--text-main` | `#272920` | Ink |
+| `--text-muted` | `#626657` | Readable supporting text |
+| `--line` | `#d5d5c9` | Shell separators |
+| `--accent` | `#63703d` | Olive, for controls only |
+| `--image-stage` | `#e4e4e4` | Neutral photo surround |
+| `--image-checker` | `#c8c8c8` | Neutral transparency checker |
+| `--image-line` | `#888888` | Neutral frame border/focus |
+
+Selection, remove controls and Custom/status badges belong in a metadata/control strip outside
+the image area. Keep image-stage borders achromatic too. User-chosen artwork/background colors
+remain intact; the grayscale rule applies to UI surrounds, not to photograph pixels.
+The dashboard typography and colors in the remaining sections still apply to internal/backend apps.
+
 ---
 
 ## 2. Typography
